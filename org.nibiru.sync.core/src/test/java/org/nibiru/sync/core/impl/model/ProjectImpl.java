@@ -24,6 +24,6 @@ public class ProjectImpl implements Project {
 
     @Override
     public void setRoot(Directory root) {
-        this.root.set((DirectoryImpl) root);
+        this.root.set(root);
     }
 }
