@@ -10,6 +10,7 @@ import java.util.UUID;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ModelListener {
+    public static final String ROOT_KEY = "";
     //private final ComplexValue<Object> root;
     private final ModelUpdater modelUpdater;
 
@@ -18,11 +19,10 @@ public class ModelListener {
                          ModelUpdater modelUpdater) {
         checkNotNull(root);
         this.modelUpdater = checkNotNull(modelUpdater);
-        addObject((Value<Object>) root);
+        addObject(ROOT_KEY, (Value<Object>) root);
     }
 
-    private void addObject(Value<Object> object) {
-        String key = UUID.randomUUID().toString(); // TODO: poner algo que sea compatible con GWT
+    private void addObject(String key, Value<Object> object) {
         modelUpdater.create(key, object);
         object.addObserver(() -> {
             addChildren(object);
@@ -37,7 +37,8 @@ public class ModelListener {
             ComplexType<Object> complexType = (ComplexType<Object>) complexObject.getType();
 
             for (Property<Object, ?> property : complexType.getProperties()) {
-                addObject(complexObject.get((Property<Object, Object>) property));
+                String key = UUID.randomUUID().toString(); // TODO: poner algo que sea compatible con GWT
+                addObject(key, complexObject.get((Property<Object, Object>) property));
             }
         }
     }

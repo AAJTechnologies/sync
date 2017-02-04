@@ -5,12 +5,15 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import org.nibiru.sync.core.impl.model.DirectoryImpl;
+import org.nibiru.sync.core.impl.model.DirectoryValue;
 import org.nibiru.sync.core.impl.model.Project;
 import org.nibiru.sync.core.impl.model.ProjectImpl;
 import org.nibiru.sync.core.impl.model.ProjectValue;
 
 public class SyncTest {
     private static String PROJECT_NAME = "Eipipimeiker";
+    private static String ROOT_NAME = "/";
     @Before
     public void setUp() throws Exception {
     }
@@ -32,10 +35,14 @@ public class SyncTest {
 
         source.set(new ProjectImpl());
 
-        source.get().setName("PROJECT_NAME");
+        source.get().setName(PROJECT_NAME);
+
+        source.get().setRoot(new DirectoryImpl());
+        source.get().getRoot().setName(ROOT_NAME);
 
         ProjectValue target = updater.getRoot();
 
-        assertEquals(source.get().getName(), target.get().getName());
+        assertEquals(PROJECT_NAME, target.get().getName());
+        assertEquals(ROOT_NAME, target.get().getRoot().getName());
     }
 }
