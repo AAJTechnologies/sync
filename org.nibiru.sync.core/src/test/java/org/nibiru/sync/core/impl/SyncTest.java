@@ -4,12 +4,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.nibiru.sync.core.impl.model.DirectoryValue;
+
 import org.nibiru.sync.core.impl.model.Project;
 import org.nibiru.sync.core.impl.model.ProjectImpl;
 import org.nibiru.sync.core.impl.model.ProjectValue;
 
-public class SyncManagerTest {
+public class SyncTest {
     private static String PROJECT_NAME = "Eipipimeiker";
     @Before
     public void setUp() throws Exception {
@@ -22,17 +22,20 @@ public class SyncManagerTest {
 
     @Test
     public void matanga() throws Exception {
-        Project source = new ProjectImpl();
-        Project target = new ProjectImpl();
+//        Project source = new ProjectImpl();
+//        Project target = new ProjectImpl();
 
-        ProjectValue pv = new ProjectValue();
+        ProjectValue source = new ProjectValue();
 
-        SyncManager syncManager = new SyncManager(new TestValueFactory(), pv);
+        ModelUpdater updater = new ModelUpdater();
+        ModelListener listener = new ModelListener(source, updater);
 
-        pv.set(source);
+        source.set(new ProjectImpl());
 
-        source.setName("PROJECT_NAME");
+        source.get().setName("PROJECT_NAME");
 
-        assertEquals(source.getName(), target.getName());
+        ProjectValue target = updater.getRoot();
+
+        assertEquals(source.get().getName(), target.get().getName());
     }
 }
