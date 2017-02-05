@@ -15,7 +15,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ModelUpdater {
     private final Map<String, Value<Object>> objects;
-    private Value<?> root;
 
     public ModelUpdater() {
         objects = Maps.newHashMap();
@@ -27,9 +26,6 @@ public class ModelUpdater {
     public void create(String key, Value<?> element) {
         checkNotNull(key);
         checkNotNull(element);
-        if (root == null) {
-            root = element;
-        }
         objects.put(key, (Value<Object>) element);
     }
 
@@ -50,6 +46,6 @@ public class ModelUpdater {
     }
 
     public <T extends Value<V>, V> T getRoot() {
-        return (T) root;
+        return (T) objects.get(ModelListener.ROOT_KEY);
     }
 }
