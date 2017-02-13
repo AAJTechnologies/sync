@@ -11,7 +11,7 @@ import org.nibiru.sync.core.impl.model.ProjectValue;
 
 import static org.junit.Assert.assertEquals;
 
-public class SyncTest {
+public class RemoteSyncTest {
     private static String PROJECT_NAME = "Eipipimeiker";
     private static String ROOT_NAME = "/";
 
@@ -29,7 +29,7 @@ public class SyncTest {
         ProjectValue source = new ProjectValue();
 
         ModelUpdaterImpl updater = new ModelUpdaterImpl();
-        ModelListenerImpl listener = new ModelListenerImpl(updater);
+        ModelListenerImpl listener = new ModelListenerImpl(new LocalToRemoteUpdater(new RemoteToLocalUpdater(updater)));
         listener.listen(source);
 
         source.set(new ProjectImpl());

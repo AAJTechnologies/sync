@@ -4,21 +4,25 @@ import org.nibiru.model.core.api.ComplexType;
 import org.nibiru.model.core.api.ComplexValue;
 import org.nibiru.model.core.api.Property;
 import org.nibiru.model.core.api.Value;
+import org.nibiru.sync.core.api.ModelListener;
+import org.nibiru.sync.core.api.ModelUpdater;
 
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ModelListener {
+public class ModelListenerImpl implements ModelListener {
     public static final String ROOT_KEY = "";
-    //private final ComplexValue<Object> root;
     private final ModelUpdater modelUpdater;
 
-    // Para remoto, wrapear el ModelUpdater?
-    public ModelListener(Value<?> root,
-                         ModelUpdater modelUpdater) {
-        checkNotNull(root);
+    // Para remoto, wrapear el ModelUpdaterImpl?
+    public ModelListenerImpl(ModelUpdater modelUpdater) {
         this.modelUpdater = checkNotNull(modelUpdater);
+    }
+
+    @Override
+    public void listen(Value<?> root) {
+        checkNotNull(root);
         addObject(ROOT_KEY, (Value<Object>) root);
     }
 
